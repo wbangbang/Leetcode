@@ -51,3 +51,43 @@ public:
         nums[j] = temp;
     }
 };
+
+class Solution {//k-size heap
+public:
+    void adjustHeap(vector<int>& nums, int k, int i) {
+        int left = i * 2 + 1;
+        int right = left + 1;
+        int minV = nums[i], minI = i;
+        if(left < k && nums[left] < minV) {
+            minV = nums[left];
+            minI = left;
+        }
+        if(right < k && nums[right] < minV) {
+            minV = nums[right];
+            minI = right;
+        }
+        if(minI != i) {
+            swap(nums[minI], nums[i]);//nums[minI] instead of minV
+            adjustHeap(nums, k, minI);
+        }
+    }
+    
+    void buildHeap(vector<int>& nums, int k) {
+        int i = k / 2 - 1;
+        for(int j = i; j >= 0; j--) {
+            adjustHeap(nums, k, j);//j instead of i
+        }
+    }
+
+    int findKthLargest(vector<int>& nums, int k) {
+        if(nums.empty()) return -1;
+        buildHeap(nums, k);
+        for(int i = k; i < nums.size(); i++) {
+            if(nums[i] > nums[0]) {
+                swap(nums[i], nums[0]);
+                adjustHeap(nums, k, 0);
+            }
+        }
+        return nums[0];
+    }
+};
