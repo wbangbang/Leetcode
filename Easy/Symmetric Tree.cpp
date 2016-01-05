@@ -9,7 +9,7 @@
  */
 class Solution {
 public:
-    bool isSymmetric(TreeNode* root) {
+    bool isSymmetric(TreeNode* root) {//iterative
         if(root == NULL) return true;
         stack<TreeNode*> left, right;
         TreeNode* l = root, *r = root;
@@ -34,5 +34,20 @@ public:
                 r = r->right;
             }
         }
+    }
+};
+
+class Solution {
+public:
+    bool isSymmetric(TreeNode* root) {//recursive
+        if(!root) return true;
+        return isSym(root->left, root->right);
+    }
+    
+    bool isSym(TreeNode* left, TreeNode* right) {
+        if(!left && !right) return true;
+        if(!left || !right) return false;
+        if(left->val != right->val) return false;
+        return isSym(left->left, right->right) && isSym(left->right, right->left);
     }
 };
