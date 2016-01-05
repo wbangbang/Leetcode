@@ -33,3 +33,19 @@ public:
         return true;
     }
 };
+
+class Solution {
+public:
+    bool isValidBST(TreeNode* root) {//inorder traversal
+        long curr = LONG_MIN;
+        return valid(root, curr);
+    }
+    
+    bool valid(TreeNode* root, long& curr) {
+        if(!root) return true;
+        if(!valid(root->left, curr)) return false;
+        if(curr >= root->val) return false;
+        curr = root->val;
+        return valid(root->right, curr);
+    }
+};
