@@ -22,3 +22,21 @@ public:
         return max;
     }
 };
+
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        if(nums.empty()) return INT_MIN;
+        int n = nums.size(); 
+        if(n == 1) return nums[0];
+        vector<int> dp(n);
+        dp[0] = nums[0];
+        int max = nums[0];
+        for(int i = 1; i < n; i++) {
+            dp[i] = nums[i];
+            if(dp[i - 1] >= 0) dp[i] += dp[i - 1];
+            if(dp[i] > max) max = dp[i];
+        }
+        return max;
+    }
+};
