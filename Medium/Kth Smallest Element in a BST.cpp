@@ -7,7 +7,7 @@
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
-class Solution {
+class Solution {//iterative
 public:
     int kthSmallest(TreeNode* root, int k) {
         if(!root) return 0;
@@ -31,5 +31,26 @@ public:
             }
         }
         return result->val;
+    }
+};
+
+class Solution {//recursive
+    int temp, res;
+public:
+    int kthSmallest(TreeNode* root, int k) {
+        temp = k;
+        find(root);
+        return res;
+    }
+    
+    void find(TreeNode* root) {
+        if(!root) return;
+        find(root->left);
+        temp--;
+        if(!temp) {
+            res = root->val;
+            return;
+        }
+        find(root->right);
     }
 };
