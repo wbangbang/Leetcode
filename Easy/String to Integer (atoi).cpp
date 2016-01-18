@@ -32,3 +32,41 @@ public:
         return (int)result;
     }
 };
+
+class Solution {
+public:
+    int myAtoi(string str) {
+        if(str.empty()) return 0;
+        int n = str.length(), flag = 1, i = 0;
+        vector<int> nums;
+        //skip whitespace
+        while(isspace(str[i]) && i < n) i++;
+        if(i == n) return 0;
+        //if the first non-spaces-sequence is not valid
+        if(!isdigit(str[i]) && str[i] != '+' && str[i] != '-') return 0;
+        if(str[i] == '+' || str[i] == '-') {
+            if(i + 1 >= n || !isdigit(str[i + 1])) return 0;
+            if(str[i] == '-') flag = -flag;
+            i++;
+        }
+        //valid number
+        while(i < n && isdigit(str[i])) {
+            nums.push_back(str[i] - '0');//cout<<"sfa";
+            i++;
+        }
+        //invert to int
+        long long result = 0;
+        for(int j = 0; j < nums.size(); j++) {
+            result *= 10;
+            result += nums[j];
+            //if overflow
+            if(result > INT_MAX || result < INT_MIN) {
+                result = flag == 1? result: -result;
+                return result > INT_MAX? INT_MAX: INT_MIN;
+            }
+        }
+        result = flag == 1? result: -result;
+        return result;
+    }
+};
+
