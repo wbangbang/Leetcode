@@ -26,26 +26,14 @@ public:
     }
 };
 
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode(int x) : val(x), next(NULL) {}
- * };
- */
 class Solution {//recursive
 public:
     ListNode* reverseList(ListNode* head) {
-        if(!head) return NULL;
-        if(!head->next) return head;
-        ListNode* dummy = new ListNode(0), *temp;
-        temp = head->next;
-        dummy->next = reverseList(head->next);
+        if(!head || !head->next) return head;
+        ListNode* headr, *temp = head->next;
+        headr = reverseList(head->next);
         temp->next = head;
         head->next = NULL;
-        temp = dummy->next;
-        delete dummy;
-        return temp;
+        return headr;
     }
 };
